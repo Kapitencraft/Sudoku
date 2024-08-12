@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Main {
-    private static final String version = "v0.9";
+    public static final String version = "v0.9";
     public static int yield = 10000;
 
     public static void main(String[] args) {
@@ -33,7 +33,7 @@ public class Main {
                     print("Set yield to " + yield);
                 } else if (line.startsWith("!solve ")) {
                     solve(Utils.readByte(line.substring(7)), bufferedReader);
-                } else {
+                } else if (!"!exit".equals(line)){
                     print("I don't understand that command");
                 }
             }

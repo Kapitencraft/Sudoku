@@ -1,8 +1,8 @@
 package net.kapitencraft.sudoku.elements;
 
-import net.kapitencraft.sudoku.elements.data.DataContainer;
 import net.kapitencraft.sudoku.elements.data.DataList;
 import net.kapitencraft.sudoku.SudokuField;
+import net.kapitencraft.sudoku.elements.fill_helper.GroupLine;
 import net.kapitencraft.sudoku.util.Vec2;
 
 import java.util.ArrayList;

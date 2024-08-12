@@ -3,18 +3,15 @@ package net.kapitencraft.sudoku.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.invoke.VarHandle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class Reader {
     public static byte[][] readArray(FileReader reader) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(reader);
+        List<String> list = bufferedReader.lines().toList();
         reader.close();
-        return read(bufferedReader.lines().toList(), (byte) -1);
+        return read(list, (byte) -1);
     }
 
     public static byte[][] read(List<String> list, byte size) {
@@ -29,28 +26,34 @@ public class Reader {
     private static List<Byte> readLine(byte numSize, String string) {
         List<Byte> bytes = new ArrayList<>();
         if (numSize == -1) {
-            StringBuilder builder = new StringBuilder();
-            boolean adding = false;
-            for (int i = 0; i < string.length(); i++) {
-                char c = string.charAt(i);
-                if (c == '[') {
-                    if (adding) throw new IllegalStateException("detected missing closing ]");
-                    adding = true;
-                } else if (c == ']') {
-                    if (adding) {
-                        bytes.add(Utils.readByte(builder.toString()));
-                        builder = new StringBuilder();
-                        adding = false;
-                    }
-                } else if (adding) {
-                    builder.append(string.charAt(i));
-                }
-            }
+            collectBracketContent(string, '[', ']').stream().map(Utils::readByte).forEach(bytes::add);
         } else {
             for (int i = 0; i < string.length(); i+=numSize) {
                 bytes.add(Utils.readByte(string.substring(i, i + numSize)));
             }
         }
         return bytes;
+    }
+
+    public static List<String> collectBracketContent(String in, char openBracket, char closeBracket) {
+        List<String> strings = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+        boolean adding = false;
+        for (int i = 0; i < in.length(); i++) {
+            char c = in.charAt(i);
+            if (c == openBracket) {
+                if (adding) throw new IllegalStateException("detected missing closing ]");
+                adding = true;
+            } else if (c == closeBracket) {
+                if (adding) {
+                    strings.add(builder.toString());
+                    builder = new StringBuilder();
+                    adding = false;
+                }
+            } else if (adding) {
+                builder.append(in.charAt(i));
+            }
+        }
+        return strings;
     }
 }

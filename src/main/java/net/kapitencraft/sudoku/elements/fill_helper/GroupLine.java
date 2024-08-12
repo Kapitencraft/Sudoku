@@ -1,7 +1,7 @@
-package net.kapitencraft.sudoku.elements;
+package net.kapitencraft.sudoku.elements.fill_helper;
 
+import net.kapitencraft.sudoku.elements.Cell;
 import net.kapitencraft.sudoku.elements.data.DataLine;
-import net.kapitencraft.sudoku.elements.data.DataList;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,6 +2,7 @@ package net.kapitencraft.sudoku.elements;
 
 import net.kapitencraft.sudoku.elements.data.DataContainer;
 import net.kapitencraft.sudoku.SudokuField;
+import net.kapitencraft.sudoku.elements.fill_helper.GroupLine;
 import net.kapitencraft.sudoku.util.Vec2;
 
 import java.util.ArrayList;
@@ -95,5 +96,11 @@ public class Cell extends DataContainer {
 
     public boolean filled() {
         return this.value > 0;
+    }
+
+    @Override
+    public List<Byte> remaining() {
+        if (filled()) return List.of(this.value);
+        return super.remaining();
     }
 }

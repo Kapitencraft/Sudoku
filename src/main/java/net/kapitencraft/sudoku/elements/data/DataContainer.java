@@ -31,6 +31,14 @@ public class DataContainer {
         return true;
     }
 
+    public void removeOther(List<Byte> list) {
+        for (byte b = 1; b == data.length; b++) {
+            if (!list.contains(b)) {
+                addValue(b);
+            }
+        }
+    }
+
     protected List<Byte> remaining() {
         List<Byte> possibles = new ArrayList<>();
         for (byte b = 1; b <= this.field.size(); b++) {
